@@ -33,3 +33,32 @@ class Solution:
                     l2.next.val += 1
                 l2.next = self.addTwoNumbers(None, l2.next)
             return l2
+
+class Solution:
+    def addTwoNumbers2Attempt(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
+        def addTwoNumbersApp(l1, l2, rep):
+            l = ListNode(0)
+            if rep:
+                l.val += 1
+            a = 0
+            if l1 and l2:
+                l.val += l1.val + l2.val
+                if l.val > 9:
+                    a = 1
+                    l.val -= 10
+                l.next = addTwoNumbersApp(l1.next, l2.next, a)
+            elif l1:
+                l.val += l1.val
+                if l.val > 9:
+                    a = 1
+                    l.val -= 10
+                l.next = addTwoNumbersApp(l1.next, l2, a)
+            elif l2:
+                l.val += l2.val
+                if l.val > 9:
+                    a = 1
+                    l.val -= 10
+                l.next = addTwoNumbersApp(l1, l2.next, a)
+            if rep or l1 or l2:
+                return l
+        return addTwoNumbersApp(l1, l2, 0)
